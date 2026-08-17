@@ -54,7 +54,7 @@ function Reportes() {
   const porCategoria = Object.values(
     productos.reduce<Record<string, { categoria: string; valor: number }>>((acc, p) => {
       acc[p.categoria] ??= { categoria: p.categoria, valor: 0 };
-      acc[p.categoria].valor += p.stock * p.precio;
+      acc[p.categoria]!.valor += p.stock * p.precio;
       return acc;
     }, {}),
   );
@@ -62,7 +62,7 @@ function Reportes() {
   const porPago = Object.values(
     emitidas.reduce<Record<string, { name: string; value: number }>>((acc, f) => {
       acc[f.metodoPago] ??= { name: f.metodoPago, value: 0 };
-      acc[f.metodoPago].value += f.total;
+      acc[f.metodoPago]!.value += f.total;
       return acc;
     }, {}),
   );
@@ -72,8 +72,8 @@ function Reportes() {
       .flatMap((f) => f.lineas)
       .reduce<Record<string, { nombre: string; unidades: number; ingreso: number }>>((acc, l) => {
         acc[l.productoId] ??= { nombre: l.nombre, unidades: 0, ingreso: 0 };
-        acc[l.productoId].unidades += l.cantidad;
-        acc[l.productoId].ingreso += l.cantidad * l.precio;
+        acc[l.productoId]!.unidades += l.cantidad;
+        acc[l.productoId]!.ingreso += l.cantidad * l.precio;
         return acc;
       }, {}),
   ).sort((a, b) => b.ingreso - a.ingreso);
