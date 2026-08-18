@@ -1,22 +1,38 @@
-import { Link, useRouterState } from "@tanstack/react-router";
+import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
+import { useQueryClient } from "@tanstack/react-query";
 import {
   BarChart3,
   Boxes,
   LayoutDashboard,
+  LogOut,
   Receipt,
   ScanLine,
+  Settings,
   ShieldCheck,
+  Truck,
+  Users,
+  Wallet,
   type LucideIcon,
 } from "lucide-react";
 import type { ReactNode } from "react";
 
-const nav: { to: string; label: string; icon: LucideIcon }[] = [
-  { to: "/", label: "Panel", icon: LayoutDashboard },
-  { to: "/ventas", label: "Ventas (POS)", icon: ScanLine },
-  { to: "/inventario", label: "Inventario", icon: Boxes },
-  { to: "/facturacion", label: "Facturación", icon: Receipt },
-  { to: "/reportes", label: "Reportes", icon: BarChart3 },
-  { to: "/seguridad", label: "Seguridad", icon: ShieldCheck },
+import { supabase } from "@/integrations/supabase/client";
+import { useSession } from "@/hooks/use-session";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { ThemeToggle } from "@/components/ThemeToggle";
+
+const nav: { to: string; label: string; icon: LucideIcon; perm: string }[] = [
+  { to: "/panel", label: "Panel", icon: LayoutDashboard, perm: "sales.view" },
+  { to: "/ventas", label: "Ventas (POS)", icon: ScanLine, perm: "sales.create" },
+  { to: "/facturacion", label: "Facturación", icon: Receipt, perm: "invoice.view" },
+  { to: "/inventario", label: "Inventario", icon: Boxes, perm: "inventory.view" },
+  { to: "/caja", label: "Caja", icon: Wallet, perm: "cash.view" },
+  { to: "/clientes", label: "Clientes", icon: Users, perm: "customers.view" },
+  { to: "/proveedores", label: "Proveedores", icon: Truck, perm: "suppliers.view" },
+  { to: "/reportes", label: "Reportes", icon: BarChart3, perm: "reports.view" },
+  { to: "/seguridad", label: "Seguridad", icon: ShieldCheck, perm: "users.view" },
+  { to: "/configuracion", label: "Configuración", icon: Settings, perm: "settings.view" },
 ];
 
 export function AppShell({
@@ -31,6 +47,18 @@ export function AppShell({
   children: ReactNode;
 }) {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const { nombre, email, roles, can } = useSession();
+  const navigate = useNavigate();
+  const qc = useQueryClient();
+
+  const visibles = nav.filter((n) => can(n.perm));
+
+  async function salir() {
+    await qc.cancelQueries();
+    qc.clear();
+    await supabase.auth.signOut();
+    navigate({ to: "/auth", replace: true });
+  }
 
   return (
     <div className="flex min-h-screen bg-background">
@@ -46,8 +74,8 @@ export function AppShell({
         </div>
 
         <nav className="flex flex-col gap-1">
-          {nav.map(({ to, label, icon: Icon }) => {
-            const active = to === "/" ? pathname === "/" : pathname.startsWith(to);
+          {visibles.map(({ to, label, icon: Icon }) => {
+            const active = pathname.startsWith(to);
             return (
               <Link
                 key={to}
@@ -66,9 +94,21 @@ export function AppShell({
           })}
         </nav>
 
-        <div className="mt-auto rounded-xl border border-sidebar-border p-3 text-xs text-sidebar-foreground/70">
-          <p className="font-medium text-sidebar-foreground">Sesión: Ana Villacís</p>
-          <p>Rol Administrador · Caja 01</p>
+        <div className="mt-auto space-y-2 rounded-xl border border-sidebar-border p-3 text-xs text-sidebar-foreground/70">
+          <p className="truncate font-medium text-sidebar-foreground">{nombre || email}</p>
+          <div className="flex flex-wrap gap-1">
+            {roles.map((r) => (
+              <Badge key={r} variant="secondary" className="capitalize">
+                {r}
+              </Badge>
+            ))}
+          </div>
+          <button
+            onClick={salir}
+            className="flex w-full items-center gap-2 rounded-md px-1 py-1.5 text-left hover:text-sidebar-foreground"
+          >
+            <LogOut className="size-3.5" /> Cerrar sesión
+          </button>
         </div>
       </aside>
 
@@ -78,17 +118,22 @@ export function AppShell({
             <h1 className="text-xl font-semibold">{title}</h1>
             {subtitle && <p className="text-sm text-muted-foreground">{subtitle}</p>}
           </div>
-          {actions}
+          <div className="flex items-center gap-2">
+            {actions}
+            <ThemeToggle />
+            <Button variant="ghost" size="icon" onClick={salir} className="md:hidden" aria-label="Salir">
+              <LogOut className="size-4" />
+            </Button>
+          </div>
         </header>
 
         <nav className="flex gap-1 overflow-x-auto border-b border-border px-4 py-2 md:hidden">
-          {nav.map(({ to, label }) => (
+          {visibles.map(({ to, label }) => (
             <Link
               key={to}
               to={to}
               className="whitespace-nowrap rounded-md px-3 py-1.5 text-xs text-muted-foreground"
               activeProps={{ className: "bg-secondary text-secondary-foreground font-medium" }}
-              activeOptions={{ exact: to === "/" }}
             >
               {label}
             </Link>
