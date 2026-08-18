@@ -10,102 +10,33 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as FacturacionRouteImport } from './routes/facturacion'
-import { Route as InventarioRouteImport } from './routes/inventario'
-import { Route as ReportesRouteImport } from './routes/reportes'
-import { Route as SeguridadRouteImport } from './routes/seguridad'
-import { Route as VentasRouteImport } from './routes/ventas'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const FacturacionRoute = FacturacionRouteImport.update({
-  id: '/facturacion',
-  path: '/facturacion',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const InventarioRoute = InventarioRouteImport.update({
-  id: '/inventario',
-  path: '/inventario',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ReportesRoute = ReportesRouteImport.update({
-  id: '/reportes',
-  path: '/reportes',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const SeguridadRoute = SeguridadRouteImport.update({
-  id: '/seguridad',
-  path: '/seguridad',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const VentasRoute = VentasRouteImport.update({
-  id: '/ventas',
-  path: '/ventas',
-  getParentRoute: () => rootRouteImport,
-} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/facturacion': typeof FacturacionRoute
-  '/inventario': typeof InventarioRoute
-  '/reportes': typeof ReportesRoute
-  '/seguridad': typeof SeguridadRoute
-  '/ventas': typeof VentasRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/facturacion': typeof FacturacionRoute
-  '/inventario': typeof InventarioRoute
-  '/reportes': typeof ReportesRoute
-  '/seguridad': typeof SeguridadRoute
-  '/ventas': typeof VentasRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/facturacion': typeof FacturacionRoute
-  '/inventario': typeof InventarioRoute
-  '/reportes': typeof ReportesRoute
-  '/seguridad': typeof SeguridadRoute
-  '/ventas': typeof VentasRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths:
-    | '/'
-    | '/facturacion'
-    | '/inventario'
-    | '/reportes'
-    | '/seguridad'
-    | '/ventas'
+  fullPaths: '/'
   fileRoutesByTo: FileRoutesByTo
-  to:
-    | '/'
-    | '/facturacion'
-    | '/inventario'
-    | '/reportes'
-    | '/seguridad'
-    | '/ventas'
-  id:
-    | '__root__'
-    | '/'
-    | '/facturacion'
-    | '/inventario'
-    | '/reportes'
-    | '/seguridad'
-    | '/ventas'
+  to: '/'
+  id: '__root__' | '/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  FacturacionRoute: typeof FacturacionRoute
-  InventarioRoute: typeof InventarioRoute
-  ReportesRoute: typeof ReportesRoute
-  SeguridadRoute: typeof SeguridadRoute
-  VentasRoute: typeof VentasRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -117,51 +48,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/facturacion': {
-      id: '/facturacion'
-      path: '/facturacion'
-      fullPath: '/facturacion'
-      preLoaderRoute: typeof FacturacionRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/inventario': {
-      id: '/inventario'
-      path: '/inventario'
-      fullPath: '/inventario'
-      preLoaderRoute: typeof InventarioRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/reportes': {
-      id: '/reportes'
-      path: '/reportes'
-      fullPath: '/reportes'
-      preLoaderRoute: typeof ReportesRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/seguridad': {
-      id: '/seguridad'
-      path: '/seguridad'
-      fullPath: '/seguridad'
-      preLoaderRoute: typeof SeguridadRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/ventas': {
-      id: '/ventas'
-      path: '/ventas'
-      fullPath: '/ventas'
-      preLoaderRoute: typeof VentasRouteImport
-      parentRoute: typeof rootRouteImport
-    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  FacturacionRoute: FacturacionRoute,
-  InventarioRoute: InventarioRoute,
-  ReportesRoute: ReportesRoute,
-  SeguridadRoute: SeguridadRoute,
-  VentasRoute: VentasRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
