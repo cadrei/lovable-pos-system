@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AuthRouteImport } from './routes/auth'
+import { Route as AuthenticatedCajaRouteImport } from './routes/_authenticated/caja'
 import { Route as AuthenticatedFacturacionRouteImport } from './routes/_authenticated/facturacion'
 import { Route as AuthenticatedInventarioRouteImport } from './routes/_authenticated/inventario'
 import { Route as AuthenticatedPanelRouteImport } from './routes/_authenticated/panel'
@@ -30,6 +31,11 @@ const AuthRoute = AuthRouteImport.update({
   id: '/auth',
   path: '/auth',
   getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedCajaRoute = AuthenticatedCajaRouteImport.update({
+  id: '/caja',
+  path: '/caja',
+  getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const AuthenticatedFacturacionRoute =
   AuthenticatedFacturacionRouteImport.update({
@@ -56,6 +62,7 @@ const AuthenticatedVentasRoute = AuthenticatedVentasRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/caja': typeof AuthenticatedCajaRoute
   '/facturacion': typeof AuthenticatedFacturacionRoute
   '/inventario': typeof AuthenticatedInventarioRoute
   '/panel': typeof AuthenticatedPanelRoute
@@ -64,6 +71,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/caja': typeof AuthenticatedCajaRoute
   '/facturacion': typeof AuthenticatedFacturacionRoute
   '/inventario': typeof AuthenticatedInventarioRoute
   '/panel': typeof AuthenticatedPanelRoute
@@ -74,6 +82,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
+  '/_authenticated/caja': typeof AuthenticatedCajaRoute
   '/_authenticated/facturacion': typeof AuthenticatedFacturacionRoute
   '/_authenticated/inventario': typeof AuthenticatedInventarioRoute
   '/_authenticated/panel': typeof AuthenticatedPanelRoute
@@ -82,14 +91,28 @@ export interface FileRoutesById {
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    '/' | '/auth' | '/facturacion' | '/inventario' | '/panel' | '/ventas'
+    | '/'
+    | '/auth'
+    | '/caja'
+    | '/facturacion'
+    | '/inventario'
+    | '/panel'
+    | '/ventas'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/auth' | '/facturacion' | '/inventario' | '/panel' | '/ventas'
+  to:
+    | '/'
+    | '/auth'
+    | '/caja'
+    | '/facturacion'
+    | '/inventario'
+    | '/panel'
+    | '/ventas'
   id:
     | '__root__'
     | '/'
     | '/_authenticated'
     | '/auth'
+    | '/_authenticated/caja'
     | '/_authenticated/facturacion'
     | '/_authenticated/inventario'
     | '/_authenticated/panel'
@@ -125,6 +148,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/caja': {
+      id: '/_authenticated/caja'
+      path: '/caja'
+      fullPath: '/caja'
+      preLoaderRoute: typeof AuthenticatedCajaRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/facturacion': {
       id: '/_authenticated/facturacion'
       path: '/facturacion'
@@ -157,6 +187,7 @@ declare module '@tanstack/react-router' {
 }
 
 interface AuthenticatedRouteRouteChildren {
+  AuthenticatedCajaRoute: typeof AuthenticatedCajaRoute
   AuthenticatedFacturacionRoute: typeof AuthenticatedFacturacionRoute
   AuthenticatedInventarioRoute: typeof AuthenticatedInventarioRoute
   AuthenticatedPanelRoute: typeof AuthenticatedPanelRoute
@@ -164,6 +195,7 @@ interface AuthenticatedRouteRouteChildren {
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedCajaRoute: AuthenticatedCajaRoute,
   AuthenticatedFacturacionRoute: AuthenticatedFacturacionRoute,
   AuthenticatedInventarioRoute: AuthenticatedInventarioRoute,
   AuthenticatedPanelRoute: AuthenticatedPanelRoute,
