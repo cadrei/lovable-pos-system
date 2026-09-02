@@ -18,6 +18,7 @@ import { Route as AuthenticatedFacturacionRouteImport } from './routes/_authenti
 import { Route as AuthenticatedInventarioRouteImport } from './routes/_authenticated/inventario'
 import { Route as AuthenticatedPanelRouteImport } from './routes/_authenticated/panel'
 import { Route as AuthenticatedProveedoresRouteImport } from './routes/_authenticated/proveedores'
+import { Route as AuthenticatedReportesRouteImport } from './routes/_authenticated/reportes'
 import { Route as AuthenticatedVentasRouteImport } from './routes/_authenticated/ventas'
 
 const IndexRoute = IndexRouteImport.update({
@@ -66,6 +67,11 @@ const AuthenticatedProveedoresRoute =
     path: '/proveedores',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedReportesRoute = AuthenticatedReportesRouteImport.update({
+  id: '/reportes',
+  path: '/reportes',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedVentasRoute = AuthenticatedVentasRouteImport.update({
   id: '/ventas',
   path: '/ventas',
@@ -81,6 +87,7 @@ export interface FileRoutesByFullPath {
   '/inventario': typeof AuthenticatedInventarioRoute
   '/panel': typeof AuthenticatedPanelRoute
   '/proveedores': typeof AuthenticatedProveedoresRoute
+  '/reportes': typeof AuthenticatedReportesRoute
   '/ventas': typeof AuthenticatedVentasRoute
 }
 export interface FileRoutesByTo {
@@ -92,6 +99,7 @@ export interface FileRoutesByTo {
   '/inventario': typeof AuthenticatedInventarioRoute
   '/panel': typeof AuthenticatedPanelRoute
   '/proveedores': typeof AuthenticatedProveedoresRoute
+  '/reportes': typeof AuthenticatedReportesRoute
   '/ventas': typeof AuthenticatedVentasRoute
 }
 export interface FileRoutesById {
@@ -105,6 +113,7 @@ export interface FileRoutesById {
   '/_authenticated/inventario': typeof AuthenticatedInventarioRoute
   '/_authenticated/panel': typeof AuthenticatedPanelRoute
   '/_authenticated/proveedores': typeof AuthenticatedProveedoresRoute
+  '/_authenticated/reportes': typeof AuthenticatedReportesRoute
   '/_authenticated/ventas': typeof AuthenticatedVentasRoute
 }
 export interface FileRouteTypes {
@@ -118,6 +127,7 @@ export interface FileRouteTypes {
     | '/inventario'
     | '/panel'
     | '/proveedores'
+    | '/reportes'
     | '/ventas'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -129,6 +139,7 @@ export interface FileRouteTypes {
     | '/inventario'
     | '/panel'
     | '/proveedores'
+    | '/reportes'
     | '/ventas'
   id:
     | '__root__'
@@ -141,6 +152,7 @@ export interface FileRouteTypes {
     | '/_authenticated/inventario'
     | '/_authenticated/panel'
     | '/_authenticated/proveedores'
+    | '/_authenticated/reportes'
     | '/_authenticated/ventas'
   fileRoutesById: FileRoutesById
 }
@@ -215,6 +227,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedProveedoresRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/reportes': {
+      id: '/_authenticated/reportes'
+      path: '/reportes'
+      fullPath: '/reportes'
+      preLoaderRoute: typeof AuthenticatedReportesRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/ventas': {
       id: '/_authenticated/ventas'
       path: '/ventas'
@@ -232,6 +251,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedInventarioRoute: typeof AuthenticatedInventarioRoute
   AuthenticatedPanelRoute: typeof AuthenticatedPanelRoute
   AuthenticatedProveedoresRoute: typeof AuthenticatedProveedoresRoute
+  AuthenticatedReportesRoute: typeof AuthenticatedReportesRoute
   AuthenticatedVentasRoute: typeof AuthenticatedVentasRoute
 }
 
@@ -242,6 +262,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedInventarioRoute: AuthenticatedInventarioRoute,
   AuthenticatedPanelRoute: AuthenticatedPanelRoute,
   AuthenticatedProveedoresRoute: AuthenticatedProveedoresRoute,
+  AuthenticatedReportesRoute: AuthenticatedReportesRoute,
   AuthenticatedVentasRoute: AuthenticatedVentasRoute,
 }
 
