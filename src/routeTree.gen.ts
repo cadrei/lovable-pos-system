@@ -17,6 +17,7 @@ import { Route as AuthenticatedClientesRouteImport } from './routes/_authenticat
 import { Route as AuthenticatedFacturacionRouteImport } from './routes/_authenticated/facturacion'
 import { Route as AuthenticatedInventarioRouteImport } from './routes/_authenticated/inventario'
 import { Route as AuthenticatedPanelRouteImport } from './routes/_authenticated/panel'
+import { Route as AuthenticatedProveedoresRouteImport } from './routes/_authenticated/proveedores'
 import { Route as AuthenticatedVentasRouteImport } from './routes/_authenticated/ventas'
 
 const IndexRoute = IndexRouteImport.update({
@@ -59,6 +60,12 @@ const AuthenticatedPanelRoute = AuthenticatedPanelRouteImport.update({
   path: '/panel',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedProveedoresRoute =
+  AuthenticatedProveedoresRouteImport.update({
+    id: '/proveedores',
+    path: '/proveedores',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedVentasRoute = AuthenticatedVentasRouteImport.update({
   id: '/ventas',
   path: '/ventas',
@@ -73,6 +80,7 @@ export interface FileRoutesByFullPath {
   '/facturacion': typeof AuthenticatedFacturacionRoute
   '/inventario': typeof AuthenticatedInventarioRoute
   '/panel': typeof AuthenticatedPanelRoute
+  '/proveedores': typeof AuthenticatedProveedoresRoute
   '/ventas': typeof AuthenticatedVentasRoute
 }
 export interface FileRoutesByTo {
@@ -83,6 +91,7 @@ export interface FileRoutesByTo {
   '/facturacion': typeof AuthenticatedFacturacionRoute
   '/inventario': typeof AuthenticatedInventarioRoute
   '/panel': typeof AuthenticatedPanelRoute
+  '/proveedores': typeof AuthenticatedProveedoresRoute
   '/ventas': typeof AuthenticatedVentasRoute
 }
 export interface FileRoutesById {
@@ -95,6 +104,7 @@ export interface FileRoutesById {
   '/_authenticated/facturacion': typeof AuthenticatedFacturacionRoute
   '/_authenticated/inventario': typeof AuthenticatedInventarioRoute
   '/_authenticated/panel': typeof AuthenticatedPanelRoute
+  '/_authenticated/proveedores': typeof AuthenticatedProveedoresRoute
   '/_authenticated/ventas': typeof AuthenticatedVentasRoute
 }
 export interface FileRouteTypes {
@@ -107,6 +117,7 @@ export interface FileRouteTypes {
     | '/facturacion'
     | '/inventario'
     | '/panel'
+    | '/proveedores'
     | '/ventas'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -117,6 +128,7 @@ export interface FileRouteTypes {
     | '/facturacion'
     | '/inventario'
     | '/panel'
+    | '/proveedores'
     | '/ventas'
   id:
     | '__root__'
@@ -128,6 +140,7 @@ export interface FileRouteTypes {
     | '/_authenticated/facturacion'
     | '/_authenticated/inventario'
     | '/_authenticated/panel'
+    | '/_authenticated/proveedores'
     | '/_authenticated/ventas'
   fileRoutesById: FileRoutesById
 }
@@ -195,6 +208,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedPanelRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/proveedores': {
+      id: '/_authenticated/proveedores'
+      path: '/proveedores'
+      fullPath: '/proveedores'
+      preLoaderRoute: typeof AuthenticatedProveedoresRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/ventas': {
       id: '/_authenticated/ventas'
       path: '/ventas'
@@ -211,6 +231,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedFacturacionRoute: typeof AuthenticatedFacturacionRoute
   AuthenticatedInventarioRoute: typeof AuthenticatedInventarioRoute
   AuthenticatedPanelRoute: typeof AuthenticatedPanelRoute
+  AuthenticatedProveedoresRoute: typeof AuthenticatedProveedoresRoute
   AuthenticatedVentasRoute: typeof AuthenticatedVentasRoute
 }
 
@@ -220,6 +241,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedFacturacionRoute: AuthenticatedFacturacionRoute,
   AuthenticatedInventarioRoute: AuthenticatedInventarioRoute,
   AuthenticatedPanelRoute: AuthenticatedPanelRoute,
+  AuthenticatedProveedoresRoute: AuthenticatedProveedoresRoute,
   AuthenticatedVentasRoute: AuthenticatedVentasRoute,
 }
 
