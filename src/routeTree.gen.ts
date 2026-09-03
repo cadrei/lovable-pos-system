@@ -19,6 +19,7 @@ import { Route as AuthenticatedInventarioRouteImport } from './routes/_authentic
 import { Route as AuthenticatedPanelRouteImport } from './routes/_authenticated/panel'
 import { Route as AuthenticatedProveedoresRouteImport } from './routes/_authenticated/proveedores'
 import { Route as AuthenticatedReportesRouteImport } from './routes/_authenticated/reportes'
+import { Route as AuthenticatedSeguridadRouteImport } from './routes/_authenticated/seguridad'
 import { Route as AuthenticatedVentasRouteImport } from './routes/_authenticated/ventas'
 
 const IndexRoute = IndexRouteImport.update({
@@ -72,6 +73,11 @@ const AuthenticatedReportesRoute = AuthenticatedReportesRouteImport.update({
   path: '/reportes',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedSeguridadRoute = AuthenticatedSeguridadRouteImport.update({
+  id: '/seguridad',
+  path: '/seguridad',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedVentasRoute = AuthenticatedVentasRouteImport.update({
   id: '/ventas',
   path: '/ventas',
@@ -88,6 +94,7 @@ export interface FileRoutesByFullPath {
   '/panel': typeof AuthenticatedPanelRoute
   '/proveedores': typeof AuthenticatedProveedoresRoute
   '/reportes': typeof AuthenticatedReportesRoute
+  '/seguridad': typeof AuthenticatedSeguridadRoute
   '/ventas': typeof AuthenticatedVentasRoute
 }
 export interface FileRoutesByTo {
@@ -100,6 +107,7 @@ export interface FileRoutesByTo {
   '/panel': typeof AuthenticatedPanelRoute
   '/proveedores': typeof AuthenticatedProveedoresRoute
   '/reportes': typeof AuthenticatedReportesRoute
+  '/seguridad': typeof AuthenticatedSeguridadRoute
   '/ventas': typeof AuthenticatedVentasRoute
 }
 export interface FileRoutesById {
@@ -114,6 +122,7 @@ export interface FileRoutesById {
   '/_authenticated/panel': typeof AuthenticatedPanelRoute
   '/_authenticated/proveedores': typeof AuthenticatedProveedoresRoute
   '/_authenticated/reportes': typeof AuthenticatedReportesRoute
+  '/_authenticated/seguridad': typeof AuthenticatedSeguridadRoute
   '/_authenticated/ventas': typeof AuthenticatedVentasRoute
 }
 export interface FileRouteTypes {
@@ -128,6 +137,7 @@ export interface FileRouteTypes {
     | '/panel'
     | '/proveedores'
     | '/reportes'
+    | '/seguridad'
     | '/ventas'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -140,6 +150,7 @@ export interface FileRouteTypes {
     | '/panel'
     | '/proveedores'
     | '/reportes'
+    | '/seguridad'
     | '/ventas'
   id:
     | '__root__'
@@ -153,6 +164,7 @@ export interface FileRouteTypes {
     | '/_authenticated/panel'
     | '/_authenticated/proveedores'
     | '/_authenticated/reportes'
+    | '/_authenticated/seguridad'
     | '/_authenticated/ventas'
   fileRoutesById: FileRoutesById
 }
@@ -234,6 +246,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedReportesRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/seguridad': {
+      id: '/_authenticated/seguridad'
+      path: '/seguridad'
+      fullPath: '/seguridad'
+      preLoaderRoute: typeof AuthenticatedSeguridadRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/ventas': {
       id: '/_authenticated/ventas'
       path: '/ventas'
@@ -252,6 +271,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedPanelRoute: typeof AuthenticatedPanelRoute
   AuthenticatedProveedoresRoute: typeof AuthenticatedProveedoresRoute
   AuthenticatedReportesRoute: typeof AuthenticatedReportesRoute
+  AuthenticatedSeguridadRoute: typeof AuthenticatedSeguridadRoute
   AuthenticatedVentasRoute: typeof AuthenticatedVentasRoute
 }
 
@@ -263,6 +283,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedPanelRoute: AuthenticatedPanelRoute,
   AuthenticatedProveedoresRoute: AuthenticatedProveedoresRoute,
   AuthenticatedReportesRoute: AuthenticatedReportesRoute,
+  AuthenticatedSeguridadRoute: AuthenticatedSeguridadRoute,
   AuthenticatedVentasRoute: AuthenticatedVentasRoute,
 }
 

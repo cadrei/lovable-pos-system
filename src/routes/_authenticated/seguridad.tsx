@@ -118,7 +118,13 @@ function Seguridad() {
   }, [permisos]);
 
   const actualizarPerfil = useMutation({
-    mutationFn: async ({ id, patch }: { id: string; patch: Record<string, unknown> }) => {
+    mutationFn: async ({
+      id,
+      patch,
+    }: {
+      id: string;
+      patch: { active?: boolean; branch_id?: string | null };
+    }) => {
       const { error } = await supabase.from("profiles").update(patch).eq("id", id);
       if (error) throw error;
     },
